@@ -28,12 +28,14 @@
   "scripts": {
     "test": "grunt test"
   },
+  "dependencies": {
+    "rsyncwrapper": "0.0.18"
+  },
   "devDependencies": {
     "grunt-contrib-jshint": "~0.6.0",
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-nodeunit": "~0.2.0",
-    "grunt": "~0.4.1",
-    "rsyncwrapper": "0.0.18"
+    "grunt": "~0.4.1"
   },
   "peerDependencies": {
     "grunt": "~0.4.1"
