@@ -10,11 +10,11 @@
 
 var rsync = require('rsyncwrapper').rsync
 
-function clone(obj) {
-    return JSON.parse(JSON.stringify(obj))
-}
-
 module.exports = function(grunt) {
+
+    function clone(obj) {
+        return JSON.parse(JSON.stringify(obj))
+    }
 
     // Please see the Grunt documentation for more information regarding task
     // creation: http://gruntjs.com/creating-tasks
