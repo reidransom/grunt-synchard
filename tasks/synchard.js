@@ -46,10 +46,13 @@ module.exports = function(grunt) {
                     return true
                 }
             })
-            // Write the destination file.
-            if (!grunt.file.exists(grpoptions.dest)) {
+            
+            // Check if the dest is remote, else make sure the local folder exists
+            if (!grpoptions.host) {
                 grunt.file.mkdir(grpoptions.dest, '0755')
             }
+            
+            //grunt.log.writeln(require('util').inspect(grpoptions))
             rsync(grpoptions, function(error, stdout, stderr, cmd) {
                 grunt.log.writeln(cmd)
                 stdout = stdout.trim()
