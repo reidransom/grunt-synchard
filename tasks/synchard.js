@@ -52,7 +52,10 @@ module.exports = function(grunt) {
             }
             rsync(grpoptions, function(error, stdout, stderr, cmd) {
                 grunt.log.writeln(cmd)
-                grunt.log.writeln(stdout)
+                stdout = stdout.trim()
+                if (stdout) {
+                    grunt.log.writeln(stdout)
+                }
                 if (error) {
                     grunt.log.warn(stderr)
                     done(false)
