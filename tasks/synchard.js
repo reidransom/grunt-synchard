@@ -32,7 +32,7 @@ module.exports = function(grunt) {
             
             var grpoptions = clone(options)
             grpoptions.src = []
-            grpoptions.dest = './' + f.dest
+            grpoptions.dest = f.dest
 
             // Concat specified files.
             f.src.filter(function(filepath) {
@@ -42,7 +42,7 @@ module.exports = function(grunt) {
                     return false
                 }
                 else {
-                    grpoptions.src.push('./' + filepath)
+                    grpoptions.src.push(filepath)
                     return true
                 }
             })
