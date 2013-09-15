@@ -76,7 +76,7 @@ In this example, the folder `src` is copied to `dest/custom_options`.  Custom op
         },
     })
 
-This would be the output.
+Assuming `src` contains two files `123` and `testing`, this would output:
 
     rsync ./src/ ./dest/custom_options/ --exclude=123 -av
     building file list ... done
