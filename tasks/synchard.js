@@ -10,11 +10,11 @@
 
 var rsync = require('rsyncwrapper').rsync
 
-function clone(obj) {
-    return JSON.parse(JSON.stringify(obj))
-}
-
 module.exports = function(grunt) {
+
+    function clone(obj) {
+        return JSON.parse(JSON.stringify(obj))
+    }
 
     // Please see the Grunt documentation for more information regarding task
     // creation: http://gruntjs.com/creating-tasks
@@ -32,7 +32,7 @@ module.exports = function(grunt) {
             
             var grpoptions = clone(options)
             grpoptions.src = []
-            grpoptions.dest = './' + f.dest
+            grpoptions.dest = f.dest
 
             // Concat specified files.
             f.src.filter(function(filepath) {
@@ -42,17 +42,23 @@ module.exports = function(grunt) {
                     return false
                 }
                 else {
-                    grpoptions.src.push('./' + filepath)
+                    grpoptions.src.push(filepath)
                     return true
                 }
             })
-            // Write the destination file.
-            if (!grunt.file.exists(grpoptions.dest)) {
+            
+            // Check if the dest is remote, else make sure the local folder exists
+            if (!grpoptions.host) {
                 grunt.file.mkdir(grpoptions.dest, '0755')
             }
+            
+            //grunt.log.writeln(require('util').inspect(grpoptions))
             rsync(grpoptions, function(error, stdout, stderr, cmd) {
                 grunt.log.writeln(cmd)
-                grunt.log.writeln(stdout)
+                stdout = stdout.trim()
+                if (stdout) {
+                    grunt.log.writeln(stdout)
+                }
                 if (error) {
                     grunt.log.warn(stderr)
                     done(false)
