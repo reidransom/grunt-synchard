@@ -11,7 +11,8 @@
 module.exports = function(grunt) {
 
     // Project configuration.
-    grunt.initConfig({
+    var config = {
+        
         jshint: {
             all: [
                 'Gruntfile.js',
@@ -32,6 +33,7 @@ module.exports = function(grunt) {
         synchard: {
             default_options: {
                 options: {
+                    mkdirp: true,
                 },
                 files: {
                     'tmp/default_options': ['test/src/testing', 'test/src/123'],
@@ -53,7 +55,27 @@ module.exports = function(grunt) {
             tests: ['test/*_test.js'],
         },
 
-    });
+    };
+    
+    if (grunt.option('host')) {
+        config.synchard.to_remote = {
+            options: {
+                ssh: true,
+            },
+            dest: grunt.option('host') + ':',
+            src: ['test/src'],
+        }
+        config.synchard.from_remote = {
+            options: {
+                ssh: true,
+            },
+            files: {
+                'tmp/remote_roundtrip/': [grunt.option('host') + ':src/'],
+            },
+        }
+    }
+    
+    grunt.initConfig(config);
 
     // Actually load this plugin's task(s).
     grunt.loadTasks('tasks');

@@ -43,6 +43,30 @@ Default value: `[]`
 
 An optional array of rsync patterns to exclude from transfer.
 
+#### options.mkdirp
+Type: `Bool`
+Default value: `false`
+
+If true, the destination folder and parent folders will be created as necessary.
+
+##### options.ssh
+Type: `Bool`
+Default value: `false`
+
+Run rsync over ssh.  This is `false` by default.  To use this you need to have public/private key passwordless SSH access setup and working on your workstation.  If set to `true`, you should specify a hostname as part of your src or dest options.
+
+##### options.port
+Type: `String`
+Default value: `undefined`
+
+If your ssh host uses a non standard SSH port then set it here. Example, `"1234"`.
+
+##### options.privateKey
+Type: `String`
+Default value: `undefined`
+
+To specify an SSH private key other than the default for this host. Example, `"~/.ssh/aws.pem"`
+
 ### Usage Examples
 
 #### Default Options
@@ -86,8 +110,38 @@ Assuming `src` contains two files `123` and `testing`, this would output:
     sent 147 bytes  received 48 bytes  390.00 bytes/sec
     total size is 7  speedup is 0.04
 
+#### Remote Destination
+
+    grunt.initConfig({
+        synchard: {
+            options: {
+                ssh: true,
+            },
+            files: {
+                'user@example.com:dest/': ['src/'],
+            }
+        }
+    })
+
+#### Remote Source
+
+    grunt.initConfig({
+        synchard: {
+            options: {
+                ssh: true,
+            },
+            files: {
+                'dest/': ['user@example.com:src/'],
+            }
+        }
+    })
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
+Local tests can be run with `grunt test`.  Remote ssh tests can be run with `grunt test --host=user@example.com`.
+
 ## Release History
-_(Nothing yet)_
+0.2.0 - Added `ssh` and `mkdirp` options.
+
+0.1.0 - Initial Release
