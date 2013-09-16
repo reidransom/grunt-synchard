@@ -41,4 +41,13 @@ exports.synchard = {
         test.deepEqual(actual, grunt.util._.without(expected, '123'), 'files are copied from test/src to tmp/custom_options.')
         test.done()
     },
+    remote_roundtrip: function(test) {
+        if (grunt.option('host')) {
+            test.expect(1)
+            var actual = grunt.file.expand({cwd: 'tmp/remote_roundtrip'}, '**'),
+                expected = grunt.file.expand({cwd: 'test/src'}, '**')
+            test.deepEqual(actual, expected, 'files are copied to a remote host then back to tmp/remote_roundtrip.')
+        }
+        test.done()
+    },
 }
