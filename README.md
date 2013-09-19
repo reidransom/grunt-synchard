@@ -49,19 +49,19 @@ Default value: `false`
 
 If true, the destination folder and parent folders will be created as necessary.
 
-##### options.ssh
+#### options.ssh
 Type: `Bool`
 Default value: `false`
 
 Run rsync over ssh.  This is `false` by default.  To use this you need to have public/private key passwordless SSH access setup and working on your workstation.  If set to `true`, you should specify a hostname as part of your src or dest options.
 
-##### options.port
+#### options.port
 Type: `String`
 Default value: `undefined`
 
 If your ssh host uses a non standard SSH port then set it here. Example, `"1234"`.
 
-##### options.privateKey
+#### options.privateKey
 Type: `String`
 Default value: `undefined`
 
