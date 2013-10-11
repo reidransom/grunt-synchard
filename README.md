@@ -74,11 +74,12 @@ In this example, the default options are used to copy multiple files from `src` 
 
     grunt.initConfig({
         synchard: {
-            options: {},
-            files: {
-                'dest/default_options': ['src/testing', 'src/123'],
-            },
-        },
+            default: {
+                files: {
+                    'dest/default_options': ['src/testing', 'src/123']
+                }
+            }
+        }
     })
     
 This would be the output.
@@ -90,14 +91,16 @@ In this example, the folder `src` is copied to `dest/custom_options`.  Custom op
 
     grunt.initConfig({
         synchard: {
-            options: {
-                args: ['-av'],
-                exclude: ['123'],
-            },
-            files: {
-                'dest/custom_options/': ['src/'],
-            },
-        },
+            custom: {
+                options: {
+                    args: ['-av'],
+                    exclude: ['123']
+                },
+                files: {
+                    'dest/custom_options/': ['src/']
+                }
+            }
+        }
     })
 
 Assuming `src` contains two files `123` and `testing`, this would output:
@@ -114,11 +117,13 @@ Assuming `src` contains two files `123` and `testing`, this would output:
 
     grunt.initConfig({
         synchard: {
-            options: {
-                ssh: true,
-            },
-            files: {
-                'user@example.com:dest/': ['src/'],
+            remotedest: {
+                options: {
+                    ssh: true
+                },
+                files: {
+                    'user@example.com:dest/': ['src/']
+                }
             }
         }
     })
@@ -127,11 +132,13 @@ Assuming `src` contains two files `123` and `testing`, this would output:
 
     grunt.initConfig({
         synchard: {
-            options: {
-                ssh: true,
-            },
-            files: {
-                'dest/': ['user@example.com:src/'],
+            remotesrc: {
+                options: {
+                    ssh: true
+                },
+                files: {
+                    'dest/': ['user@example.com:src/']
+                }
             }
         }
     })
