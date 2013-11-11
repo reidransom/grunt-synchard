@@ -81,10 +81,27 @@ In this example, the default options are used to copy multiple files from `src` 
             }
         }
     })
-    
+
 This would be the output.
 
     rsync ./src/testing ./src/123 ./dest/default_options --archive
+
+#### Dry Run
+
+If you invoked `grunt` for the above config with the command-line option `--dry-run` like this:
+
+    $ grunt --dry-run
+
+the output would look something like this:
+
+    rsync test/src/testing test/src/123 tmp/default_options --archive --dry-run --verbose
+    building file list ... done
+    created directory tmp/default_options
+    123
+    testing
+
+    sent 98 bytes  received 32 bytes  260.00 bytes/sec
+    total size is 12  speedup is 0.09
 
 #### Custom Options
 In this example, the folder `src` is copied to `dest/custom_options`.  Custom options are used to display verbose `rsync` output and exclude the `123` file.
@@ -109,7 +126,7 @@ Assuming `src` contains two files `123` and `testing`, this would output:
     building file list ... done
     ./
     testing
-    
+
     sent 147 bytes  received 48 bytes  390.00 bytes/sec
     total size is 7  speedup is 0.04
 
@@ -143,10 +160,20 @@ Assuming `src` contains two files `123` and `testing`, this would output:
         }
     })
 
+## Testing
+
+You can test local rsync tasks with:
+
+    $ grunt test
+
+You can test local and remote rsync tasks by first making sure you have password-less ssh key access to a server (ex: `user@example.com`) and then running:
+
+    $ grunt test --host user@example.com     # READ ON BEFORE RUNNING THIS
+
+Be careful!  This will remove files from `user@example.com:synchard_test`.
+
 ## Contributing
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
-
-Local tests can be run with `grunt test`.  Remote ssh tests can be run with `grunt test --host=user@example.com`.
 
 ## Release History
 0.2.0 - Added `ssh` and `mkdirp` options.

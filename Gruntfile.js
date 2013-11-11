@@ -26,14 +26,18 @@ module.exports = function(grunt) {
 
         // Before generating any new files, remove any previously-created files.
         clean: {
-            tests: ['tmp'],
+            tests: ['tmp/*'],
         },
 
-        // Configuration to be run (and then tested).
         synchard: {
             default_options: {
                 files: {
                     'tmp/default_options': ['test/src/testing', 'test/src/123'],
+                },
+            },
+            dry_run: {
+                files: {
+                    'tmp/dry_run/': ['test/src/'],
                 },
             },
             custom_options: {
@@ -45,48 +49,43 @@ module.exports = function(grunt) {
                     'tmp/custom_options/': ['test/src/'],
                 },
             },
+            to_remote: {
+                options: {
+                    ssh: true
+                },
+                dest: grunt.option('host') + ':synchard_test/',
+                src: ['test/src/']
+            },
+            from_remote: {
+                options: {
+                    ssh: true
+                },
+                files: {
+                    'tmp/from_remote/': [grunt.option('host') + ':synchard_test/'],
+                },
+            }
         },
 
-        // Unit tests.
-        nodeunit: {
-            tests: ['test/*_test.js'],
-        },
+        mochaTest: {
+            all: {
+                options: {
+                    reporter: 'spec',
+                    timeout: 10000
+                },
+                src: ['test/*_test.js']
+            }
+        }
 
     };
 
-    if (grunt.option('host')) {
-        config.synchard.to_remote = {
-            options: {
-                ssh: true,
-            },
-            dest: grunt.option('host') + ':',
-            src: ['test/src'],
-        }
-        config.synchard.from_remote = {
-            options: {
-                ssh: true,
-            },
-            files: {
-                'tmp/remote_roundtrip/': [grunt.option('host') + ':src/'],
-            },
-        }
-    }
-
     grunt.initConfig(config);
-
-    // Actually load this plugin's task(s).
     grunt.loadTasks('tasks');
-
-    // These plugins provide necessary tasks.
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-clean');
     grunt.loadNpmTasks('grunt-contrib-nodeunit');
+    grunt.loadNpmTasks('grunt-mocha-test');
 
-    // Whenever the "test" task is run, first clean the "tmp" dir, then run this
-    // plugin's task(s), then test the result.
-    grunt.registerTask('test', ['clean', 'synchard', 'nodeunit']);
-
-    // By default, lint and run all tests.
+    grunt.registerTask('test', ['clean', 'mochaTest']);
     grunt.registerTask('default', ['jshint', 'test']);
 
 };
