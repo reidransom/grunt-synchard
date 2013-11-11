@@ -16,16 +16,21 @@ module.exports = function(grunt) {
     // creation: http://gruntjs.com/creating-tasks
 
     grunt.registerMultiTask('synchard', 'rsync task handler.', function() {
-        
+
         // Merge task-specific and/or target-specific options with these defaults.
         var done = this.async(),
             options = this.options({
                 args: ['--archive']
             })
 
+        if (grunt.option('dry-run')) {
+            // Let's assume you called `--dry-run` because you want to see the files that would have been transferred with `verbose`.
+            options.args = options.args.concat(['--dry-run', '--verbose'])
+        }
+
         // Iterate over all specified file groups.
         this.files.forEach(function(f) {
-            
+
             var grpoptions = grunt.util._.extend(
                 grunt.util._.clone(options), {
                     dest: f.dest,
@@ -36,7 +41,7 @@ module.exports = function(grunt) {
             if (grpoptions.mkdirp) {
                 grunt.file.mkdir(grpoptions.dest, '0755')
             }
-            
+
             rsync(grpoptions, function(error, stdout, stderr, cmd) {
                 grunt.log.writeln(cmd)
                 stdout = stdout.trim()
@@ -52,7 +57,7 @@ module.exports = function(grunt) {
                 }
             })
         })
-    
+
     })
 
 }
