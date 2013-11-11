@@ -51,6 +51,5 @@ Thumbs.db
 
 dist
 ignore
-tmp
 node_modules
 
