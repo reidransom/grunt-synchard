@@ -29,6 +29,8 @@ In your project's Gruntfile, add a section named `synchard` to the data object p
         },
     })
 
+This task runs the command-line program `rsync`.  It comes with minimal defaults and allows for lots of customization.
+
 ### Options
 
 #### options.args
