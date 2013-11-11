@@ -1,4 +1,4 @@
-# grunt-synchard
+# grunt-synchard [![Build Status](https://api.travis-ci.org/reidransom/grunt-synchard.png?branch=master)](https://travis-ci.org/reidransom/grunt-synchard)
 
 > rsync task handler.
 
