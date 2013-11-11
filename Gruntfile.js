@@ -12,7 +12,7 @@ module.exports = function(grunt) {
 
     // Project configuration.
     var config = {
-        
+
         jshint: {
             all: [
                 'Gruntfile.js',
@@ -32,9 +32,6 @@ module.exports = function(grunt) {
         // Configuration to be run (and then tested).
         synchard: {
             default_options: {
-                options: {
-                    mkdirp: true,
-                },
                 files: {
                     'tmp/default_options': ['test/src/testing', 'test/src/123'],
                 },
@@ -56,7 +53,7 @@ module.exports = function(grunt) {
         },
 
     };
-    
+
     if (grunt.option('host')) {
         config.synchard.to_remote = {
             options: {
@@ -74,7 +71,7 @@ module.exports = function(grunt) {
             },
         }
     }
-    
+
     grunt.initConfig(config);
 
     // Actually load this plugin's task(s).
